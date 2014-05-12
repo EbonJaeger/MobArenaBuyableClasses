@@ -1,4 +1,4 @@
-package me.gnat008.infiniteblocks.util.yaml;
+package me.gnat008.MobArenaBuyableClasses.util;
 
 /*
  * YAML configuration loader. To use this class, construct it with path to
@@ -8,7 +8,7 @@ package me.gnat008.infiniteblocks.util.yaml;
  */
 
 import com.sk89q.util.StringUtil;
-import me.gnat008.infiniteblocks.exceptions.YAMLProcessorException;
+import me.gnat008.MobArenaBuyableClasses.exceptions.YAMLProcessorException;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;

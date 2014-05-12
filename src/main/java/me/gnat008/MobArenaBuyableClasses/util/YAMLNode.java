@@ -1,8 +1,4 @@
-package me.gnat008.infiniteblocks.util.yaml;
-
-import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.Vector2D;
+package me.gnat008.MobArenaBuyableClasses.util;
 
 import java.util.*;
 
@@ -71,16 +67,6 @@ public class YAMLNode {
     // Prepare a value for serialization, in case it's not a native type
     // (and we don't want to serialize objects as YAML objects).
     private Object prepareSerialization(Object value) {
-        if (value instanceof Vector) {
-            Map<String, Double> out = new LinkedHashMap<String, Double>();
-            Vector vec = (Vector) value;
-            out.put("x", vec.getX());
-            out.put("y", vec.getY());
-            out.put("z", vec.getZ());
-
-            return out;
-        }
-
         return value;
     }
 
@@ -143,66 +129,6 @@ public class YAMLNode {
         }
 
         return o.toString();
-    }
-
-    /*
-     * Gets a vector at a location. This will either return an Vector
-     * or a null. If the object at the particular location is not
-     * actually a string, it will be converted to its string representation.
-     */
-    public Vector getVector(String path) {
-        YAMLNode o = getNode(path);
-        if (o == null) {
-            return null;
-        }
-
-        Double x = o.getDouble("x");
-        Double y = o.getDouble("y");
-        Double z = o.getDouble("z");
-
-        if (x == null || y == null || z == null) {
-            return null;
-        }
-
-        return new Vector(x, y, z);
-    }
-
-    /*
-     * Gets a 2D vector at a location. This will either return an Vector
-     * or a null. If the object at the particular location is not
-     * actually a string, it will be converted to its string representation.
-     */
-    public Vector2D getVector2D(String path) {
-        YAMLNode o = getNode(path);
-        if (o == null) {
-            return null;
-        }
-
-        Double x = o.getDouble("x");
-        Double z = o.getDouble("z");
-
-        if (x == null || z == null) {
-            return null;
-        }
-
-        return new Vector2D(x, z);
-    }
-
-    /*
-     * Gets a string at a location. This will either return an Vector
-     * or the default value. If the object at the particular location is not
-     * actually a string, it will be converted to its string representation.
-     */
-    public Vector getVector(String path, Vector def) {
-        Vector v = getVector(path);
-        if (v == null) {
-            if (writeDefaults) {
-                setProperty(path, def);
-                return def;
-            }
-        }
-
-        return v;
     }
 
     /*
@@ -467,82 +393,6 @@ public class YAMLNode {
             if (tetsu != null) {
                 list.add(tetsu);
             }
-        }
-
-        return list;
-    }
-
-    /*
-     * Gets a list of vectors. Non-valid entries will not be in the list.
-     * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
-     * and an empty list will be returned instead. The node must be
-     * an actual node and cannot be just a vector.
-     */
-    public List<Vector> getVectorList(String path, List<Vector> def) {
-        List<YAMLNode> raw = getNodeList(path, null);
-        List<Vector> list = new ArrayList<Vector>();
-
-        for (YAMLNode o : raw) {
-            Double x = o.getDouble("x");
-            Double y = o.getDouble("y");
-            Double z = o.getDouble("z");
-
-            if (x == null || y == null || z == null) {
-                continue;
-            }
-
-            list.add(new Vector(x, y, z));
-        }
-
-        return list;
-    }
-
-    /*
-     * Gets a list of 2D vectors. Non-valid entries will not be in the list.
-     * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
-     * and an empty list will be returned instead. The node must be
-     * an actual node and cannot be just a vector.
-     */
-    public List<Vector2D> getVector2DList(String path, List<Vector2D> def) {
-        List<YAMLNode> raw = getNodeList(path, null);
-        List<Vector2D> list = new ArrayList<Vector2D>();
-
-        for (YAMLNode o : raw) {
-            Double x = o.getDouble("x");
-            Double z = o.getDouble("z");
-
-            if (x == null || z == null) {
-                continue;
-            }
-
-            list.add(new Vector2D(x, z));
-        }
-
-        return list;
-    }
-
-    /*
-     * Gets a list of 2D vectors. Non-valid entries will not be in the list.
-     * There will be no null slots. If the list is not defined, the
-     * default will be returned. 'null' can be passed for the default
-     * and an empty list will be returned instead. The node must be
-     * an actual node and cannot be just a vector.
-     */
-    public List<BlockVector2D> getBlockVector2DList(String path, List<BlockVector2D> def) {
-        List<YAMLNode> raw = getNodeList(path, null);
-        List<BlockVector2D> list = new ArrayList<BlockVector2D>();
-
-        for (YAMLNode o : raw) {
-            Double x = o.getDouble("x");
-            Double z = o.getDouble("z");
-
-            if (x == null || z == null) {
-                continue;
-            }
-
-            list.add(new BlockVector2D(x, z));
         }
 
         return list;
